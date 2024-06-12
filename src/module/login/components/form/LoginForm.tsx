@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 const LoginForm = () => {
   const [authUrl, setAuthUrl] = useState("");
-  const route = useNavigate();
 
   const handleGoogleAuth = () => {
-    route(authUrl);
+    redirect(authUrl);
   };
 
   useEffect(() => {
     const fetchGoogleUrl = async () => {
       const res = await fetch("http://localhost:3000/api/auth/google");
       const data = await res.json();
-      setAuthUrl(data.auth.url);
+
+      setAuthUrl(data.url);
     };
     fetchGoogleUrl();
   }, []);
@@ -57,10 +57,15 @@ const LoginForm = () => {
           </form>
           <div>
             <div className="py-2">
-              <button onClick={handleGoogleAuth} className="w-full text-center border border-dark-primary flex justify-center gap-2 rounded-full py-3 hover:bg-black hover:text-white duration-300">
-                <Icon icon={"flat-color-icons:google"} fontSize={"24px"} />
-                Continue with Google
-              </button>
+              <Link to={authUrl}>
+                <button
+                  onClick={handleGoogleAuth}
+                  className="w-full text-center border border-dark-primary flex justify-center gap-2 rounded-full py-3 hover:bg-black hover:text-white duration-300"
+                >
+                  <Icon icon={"flat-color-icons:google"} fontSize={"24px"} />
+                  Continue with Google
+                </button>
+              </Link>
             </div>
             <div className="py-2">
               <button className="w-full text-center border border-dark-primary flex justify-center gap-2  rounded-full py-3 hover:bg-black hover:text-white duration-300">
