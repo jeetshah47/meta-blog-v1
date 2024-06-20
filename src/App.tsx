@@ -4,8 +4,10 @@ import HomePage from "./module/home/page/HomePage";
 import NewBlog from "./module/blogs/Page/NewBlogPage";
 import BlogPage from "./module/blogs/Page/BlogPage";
 import Blog from "./module/blogs/blog/Blog";
+import { socket, WebsocketProvider } from "./module/common/utils/socket";
 
 function App() {
+
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex-initial justify-center flex">
@@ -15,7 +17,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/blogs/:id" element={<Blog />} />
-          <Route path="/blogs/new" element={<NewBlog />} />
+          <Route
+            path="/blogs/new"
+            element={
+              <WebsocketProvider value={socket}>
+                <NewBlog />
+              </WebsocketProvider>
+            }
+          />
           <Route path="/blogs" element={<BlogPage />} />
         </Routes>
       </div>
