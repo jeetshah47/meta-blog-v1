@@ -1,13 +1,21 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import NavBar from "./module/common/components/common/nav/nav";
 import HomePage from "./module/home/page/HomePage";
 import NewBlog from "./module/blogs/Page/NewBlogPage";
 import BlogPage from "./module/blogs/Page/BlogPage";
 import Blog from "./module/blogs/blog/Blog";
 import { socket, WebsocketProvider } from "./module/common/utils/socket";
+import { useEffect } from "react";
 
 function App() {
-
+  const navigate = useNavigate()
+  useEffect(() => {
+    const userInfo = localStorage.getItem("user");
+    if(!userInfo) {
+      // navigate('/login')
+    } 
+  },[navigate])
+  
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex-initial justify-center flex">

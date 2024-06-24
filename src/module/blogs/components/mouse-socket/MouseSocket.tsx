@@ -3,7 +3,7 @@ import Cursor from "./Cursor";
 import { ClientData } from "./../../Page/NewBlogPage";
 import { WebsocketContext } from "../../../common/utils/socket";
 
-const MouseSocket = () => {
+const MouseSocket = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const socket = useContext(WebsocketContext);
   const [clients, setClients] = useState<ClientData>();
@@ -22,12 +22,6 @@ const MouseSocket = () => {
       console.log(e.clientX, e.clientY);
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
-      console.log(
-        "sending",
-        e.clientX - rect.left + scrollX,
-        e.clientY - rect.top + scrollY
-      );
-
       // setPosition({
       //   x: e.clientX - rect.left + scrollX,
       //   y: e.clientY - rect.top + scrollY,
@@ -49,7 +43,6 @@ const MouseSocket = () => {
 
   useEffect(() => {
     socket.on("sendUpdate", (data) => {
-      console.log("receive", data.mousePostion.id);
       if (clients) {
         setClients({
           ...clients,
@@ -76,9 +69,14 @@ const MouseSocket = () => {
       {clients &&
         Object.keys(clients)
           .filter((item) => item !== socket.id)
-          .map((key) => (
-            <Cursor key={key} position={clients[key].mousePosition} />
+          .map((key, index) => (
+            <Cursor
+              key={key}
+              colorIndex={index}
+              position={clients[key].mousePosition}
+            />
           ))}
+      {children}
     </div>
   );
 };
