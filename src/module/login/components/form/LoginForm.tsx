@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link, redirect } from "react-router-dom";
+import { loginUser } from "../../apis/login.api";
 
 const LoginForm = () => {
   const [authUrl, setAuthUrl] = useState("");
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleGoogleAuth = () => {
     redirect(authUrl);
@@ -19,6 +24,21 @@ const LoginForm = () => {
     fetchGoogleUrl();
   }, []);
 
+  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        email: loginData.email,
+        password: loginData.password,
+      };
+      const userLogin = await loginUser(payload);
+      console.log(userLogin);
+      alert("Login Success")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full flex justify-center items-center">
       <div className="w-2/6 border border-secondary rounded-md py-4 px-6">
@@ -28,12 +48,16 @@ const LoginForm = () => {
           </p>
         </div>
         <div>
-          <form>
+          <form onSubmit={handleLoginSubmit}>
             <div>
               <p className="text-secondary py-1">Email</p>
               <input
                 className="border outline-none rounded-md w-full py-2 px-2"
                 type="text"
+                value={loginData.email}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, email: e.target.value })
+                }
               />
             </div>
             <div className="py-3" />
@@ -42,6 +66,10 @@ const LoginForm = () => {
               <input
                 className="border outline-none rounded-md w-full py-2 px-2"
                 type="text"
+                value={loginData.password}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, password: e.target.value })
+                }
               />
             </div>
             <div className="py-4">
