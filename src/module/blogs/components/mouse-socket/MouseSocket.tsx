@@ -19,7 +19,7 @@ const MouseSocket = ({ children }: { children: React.ReactNode }) => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (ref && ref.current) {
       const rect = ref.current.getBoundingClientRect();
-      console.log(e.clientX, e.clientY);
+      // console.log(e.clientX, e.clientY);
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       // setPosition({
@@ -36,7 +36,7 @@ const MouseSocket = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     socket.on("newConnection", (data) => {
-      console.log("client from server", data);
+      // console.log("client from server", data);
       setClients(data.client);
     });
   }, [socket]);

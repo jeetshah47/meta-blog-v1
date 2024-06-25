@@ -7,6 +7,8 @@ import Blog from "./module/blogs/blog/Blog.tsx";
 import NewBlog from "./module/blogs/Page/NewBlogPage.tsx";
 import BlogPage from "./module/blogs/Page/BlogPage.tsx";
 import LoginPage from "./module/login/page/LoginPage.tsx";
+import LoginForm from "./module/login/components/form/LoginForm.tsx";
+import SignupForm from "./module/login/components/form/SignupForm.tsx";
 
 const router = createBrowserRouter([
   {
@@ -32,9 +34,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <LoginPage />
-  }
+    path: "/auth",
+    element: <LoginPage />,
+    children: [
+      {
+        path: "/auth/login",
+        element: <LoginForm />,
+      },
+      {
+        path: "/auth/signup",
+        element: <SignupForm />,
+      },
+    ],
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

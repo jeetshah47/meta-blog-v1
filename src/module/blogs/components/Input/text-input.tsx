@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 
 type TextInputProps = {
-  name: string;
-  value: string;
-  elementType: "h1" | "h2" | "h3" | "p" | "img";
-  handleValuesHandle: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    name: string
-  ) => void;
+  name?: string;
+  value?: string;
+  elementType?: "h1" | "h2" | "h3" | "p" | "img";
+  handleValuesHandle?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = ({
@@ -41,12 +38,12 @@ const TextInput = ({
           placeholder="Press '/' for commands"
           value={value}
           name={name}
-          onChange={(e) => handleValuesHandle(e, name)}
-          onBlur={handleShow}
+          onChange={handleValuesHandle}
+          // onBlur={handleShow}
           className="bg-primary dark:bg-dark-secondary outline-none w-full py-2 px-4 rounded  text-md"
         />
       )}
-      {!inputOn && mapElementToName[elementType]}
+      {/* {!inputOn && mapElementToName[elementType]} */}
       {}
     </div>
   );

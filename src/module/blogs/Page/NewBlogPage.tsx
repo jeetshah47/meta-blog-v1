@@ -5,7 +5,7 @@ import Editor from "../components/rich-text/editor";
 import TextInput from "../components/Input/text-input";
 import TextHelper from "../components/Input/text-helper";
 import MouseSocket from "../components/mouse-socket/MouseSocket";
-
+import DropDown from "../components/dropdown/dropdown";
 
 export interface ClientData {
   [index: string]: {
@@ -16,20 +16,17 @@ export interface ClientData {
 }
 
 const NewBlog = () => {
-  const generateElement = (element: string, index: number) => {
-    const mapElements: { [index: string]: React.ReactNode } = {
-      "text-helper": <TextHelper />,
-      "text-label": <TextInput />,
-      "text-para": <Editor height={"200px"} />,
-      "media-image": (
-        <picture>
-          <img className="border w-full" alt="sd" src="/imgs/dummer.png" />
-        </picture>
-      ),
-      "section-code": <div></div>,
-    };
+  const [value, setValue] = useState("");
 
-    return <div key={index}>{mapElements[element]}</div>;
+  const [showDropDown, setShowDropDown] = useState(false);
+
+  const handleValueOption = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    if (e.target.value === "/") {
+      setShowDropDown(true);
+    } else {
+      setShowDropDown(false);
+    }
   };
 
   return (
@@ -37,7 +34,8 @@ const NewBlog = () => {
       <div className="w-full flex flex-col items-center ">
         <div className="w-3/5 flex h-full border relative">
           <MouseSocket>
-            <TextHelper />
+            <TextInput value={value} handleValuesHandle={handleValueOption} />
+            {showDropDown && <DropDown addInputType={() => {}} />}
           </MouseSocket>
         </div>
       </div>
