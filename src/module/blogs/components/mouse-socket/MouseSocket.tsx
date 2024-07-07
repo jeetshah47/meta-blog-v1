@@ -39,6 +39,7 @@ const MouseSocket = ({ children }: { children: React.ReactNode }) => {
       // console.log("client from server", data);
       setClients(data.client);
     });
+    
   }, [socket]);
 
   useEffect(() => {
